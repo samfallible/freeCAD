@@ -5,5 +5,3 @@ Rules for modeling:
 		- Do not use any 'Dress Up' tools from the Part Design Workbench: thickness, draft, chamfer, fillet.
 			- Manual create these in a sketch, use additions and subtractions is outside of sketch contraints.
 	2. Everytime you make a sketch, test its parametization making sure it doesnt self-destruct. Every time you make changes to a sketch, do the same thing.
-	
-
