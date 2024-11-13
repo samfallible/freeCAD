@@ -1,0 +1,1 @@
+https://wiki.freecad.org/Manual:Traditional_modeling,_the_CSG_way

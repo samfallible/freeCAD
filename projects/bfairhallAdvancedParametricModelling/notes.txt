@@ -1,0 +1,9 @@
+Learn and use hotkeys
+Rules for modeling:
+	1. Always use absolute references.
+		- E.g. Instead of constraining the center of one circle to the tangent of another circle, constrain the center to a distance from the sketch origin point. Use the formula editor and work out the maths.
+		- Do not use any 'Dress Up' tools from the Part Design Workbench: thickness, draft, chamfer, fillet.
+			- Manual create these in a sketch, use additions and subtractions is outside of sketch contraints.
+	2. Everytime you make a sketch, test its parametization making sure it doesnt self-destruct. Every time you make changes to a sketch, do the same thing.
+	
+
