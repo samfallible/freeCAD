@@ -1,0 +1,1 @@
+This macro creates a "Topologically Safe" parametric cuboid. It is designed to be used from the FreeCAD start page. The resulting cuboid's parameters are set in the spreadsheet 'var'. The default parameters are set to 1 in by conversion of 25.4mm/in.
