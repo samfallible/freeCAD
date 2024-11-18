@@ -71,7 +71,7 @@ CODING STANDARD
 
 	ALL SOURCE CODE FILES
 	SHALL INCLUDE A LICENSE AND COPYWRITE NOTICE AT THE FILE HEAD AS FOLLOWS
-		Copyright (C) 2024  Author's Name
+		Copyright (C) YYYY authorName
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
 		the Free Software Foundation, either version 3 of the License, or
