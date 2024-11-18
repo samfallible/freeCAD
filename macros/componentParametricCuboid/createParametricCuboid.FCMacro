@@ -14,9 +14,9 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import FreeCAD as App
-import FreeCADGui as Gui
 import PartDesign
 import Sketcher
+from FreeCAD import Part
 
 # Create a new document
 doc = App.newDocument("ParametricRectangle")
@@ -26,9 +26,9 @@ spreadsheet = doc.addObject("Spreadsheet::Sheet", "var")
 spreadsheet.set("A2", "wid")
 spreadsheet.set("A3", "thk")
 spreadsheet.set("A4", "len")
-spreadsheet.set("B2", "=\(25.4\)*1")  # Default width
-spreadsheet.set("B3", "=\\(25.4\\)*1")   # Default thickness
-spreadsheet.set("B4", "=\\\(25.4\\\)*1")   # Default padding length
+spreadsheet.set("B2", '=(25.4)*1')  # Default width
+spreadsheet.set("B3", '=(25.4)*1')   # Default thickness
+spreadsheet.set("B4", '=(25.4)*1')   # Default padding length
 
 # Set aliases for the cells
 spreadsheet.setAlias("B2", "wid")
@@ -43,8 +43,8 @@ body = doc.addObject("PartDesign::Body", "Body")
 
 # Create a sketch on the XY plane
 sketch = body.newObject("Sketcher::SketchObject", "RectangleSketch")
-sketch.Support = (doc.getObject("XZ_Plane"), [''])
-sketch.MapMode = "FlatFace"
+## sketch.Support = (doc.getObject("XZ_Plane"), [''])
+## sketch.MapMode = "FlatFace"
 
 # Gui.runCommand('Sketcher_CompCreateRectangles',0)
 geoList = []
@@ -104,14 +104,15 @@ App.getDocument('ParametricRectangle').getObject('Pad').Midplane = 0
 App.getDocument('ParametricRectangle').getObject('Pad').Offset = 0
 App.getDocument('ParametricRectangle').recompute()
 App.getDocument('ParametricRectangle').getObject('RectangleSketch').Visibility = False
- 
+
 App.ActiveDocument.recompute()
 App.getDocument('ParametricRectangle').recompute()
 
 # Gui.SendMsgToActiveView("Save")
-App.getDocument("ParametricRectangle").saveAs(u"C:/Users/18055/Documents/freeCAD/20241110wormBinParametric/rectangularPrism.FCStd")
+App.getDocument("ParametricRectangle").save()
 ### End command Std_Save
 
 Gui.activeDocument().activeView().viewIsometric()
 Gui.SendMsgToActiveView("ViewFit")
 doc.recompute()
+
