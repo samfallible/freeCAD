@@ -1,58 +1,84 @@
-#   CREATE PARAMETRIC CUBIOD
-#   Copyright (C) 2024  Samuel Ellsworth
-#   This program is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 import FreeCAD as App
-import PartDesign
-import Sketcher
-from FreeCAD import Part
+import Spreadsheet
 
-# Create a new document
-doc = App.newDocument("ParametricRectangle")
+App.newDocument()
+doc = App.activeDocument()
 
-# Add a new spreadsheet
-spreadsheet = doc.addObject("Spreadsheet::Sheet", "var")
-spreadsheet.set("A2", "wid")
-spreadsheet.set("A3", "thk")
-spreadsheet.set("A4", "len")
-spreadsheet.set("B2", '=(25.4)*1')  # Default width
-spreadsheet.set("B3", '=(25.4)*1')   # Default thickness
-spreadsheet.set("B4", '=(25.4)*1')   # Default padding length
+# Create a new spreadsheet
+sheet = doc.addObject('Spreadsheet::Sheet', 'var')
 
-# Set aliases for the cells
-spreadsheet.setAlias("B2", "wid")
-spreadsheet.setAlias("B3", "thk")
-spreadsheet.setAlias("B4", "len")
+# Set cell values and aliases
+sheet.set('A1','x')
+sheet.set('B1', '=25.4*1')
+sheet.setAlias('B1', 'x')
 
-# Recompute the document to apply changes in the spreadsheet
+sheet.set('A2','y')
+sheet.set('B2', '=25.4*1')
+sheet.setAlias('B2', 'y')
+
+sheet.set('A3','z')
+sheet.set('B3', '=25.4*1')
+sheet.setAlias('B3', 'z')
+
+# Recompute the spreadsheet
+sheet.recompute()
+
+# Recompute the document
 doc.recompute()
 
-# Add a new body for the parametric sketch
-body = doc.addObject("PartDesign::Body", "Body")
+# -*- coding: utf-8 -*-
 
-# Create a sketch on the XY plane
-sketch = body.newObject("Sketcher::SketchObject", "RectangleSketch")
-## sketch.Support = (doc.getObject("XZ_Plane"), [''])
-## sketch.MapMode = "FlatFace"
+# Macro Begin: C:\Users\18055\AppData\Roaming\FreeCAD\Macro\temp.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
+import FreeCAD
+import PartDesign
+import PartDesignGui
+import Sketcher
 
+# Gui.runCommand('Std_DlgMacroRecord',0)
+# Gui.Selection.clearSelection()
+### Begin command Std_Workbench
+# Gui.activateWorkbench("PartDesignWorkbench")
+### End command Std_Workbench
+### Begin command PartDesign_NewSketch
+App.getDocument('Unnamed').addObject('PartDesign::Body','Body')
+# Gui.getDocument('Unnamed').ActiveView.setActiveObject('pdbody',App.getDocument('Unnamed').getObject('Body'),'')
+### End command PartDesign_NewSketch
+# Gui.Selection.addSelection('Unnamed','Body','Origin.XZ_Plane.',-22.7511,-3.68632e-06,30.9231)
+App.getDocument('Unnamed').getObject('Body').newObject('Sketcher::SketchObject','Sketch')
+App.getDocument('Unnamed').getObject('Sketch').Support = (App.getDocument('Unnamed').getObject('XZ_Plane'),[''])
+App.getDocument('Unnamed').getObject('Sketch').MapMode = 'FlatFace'
+App.ActiveDocument.recompute()
+# Gui.getDocument('Unnamed').setEdit(App.getDocument('Unnamed').getObject('Body'), 0, 'Sketch.')
+# ActiveSketch = App.getDocument('Unnamed').getObject('Sketch')
+# tv = Show.TempoVis(App.ActiveDocument, tag= ActiveSketch.ViewObject.TypeId)
+# ActiveSketch.ViewObject.TempoVis = tv
+# if ActiveSketch.ViewObject.EditingWorkbench:
+#   tv.activateWorkbench(ActiveSketch.ViewObject.EditingWorkbench)
+# if ActiveSketch.ViewObject.HideDependent:
+#   tv.hide(tv.get_all_dependent(App.getDocument('Unnamed').getObject('Body'), 'Sketch.'))
+# if ActiveSketch.ViewObject.ShowSupport:
+#   tv.show([ref[0] for ref in ActiveSketch.Support if not ref[0].isDerivedFrom("PartDesign::Plane")])
+# if ActiveSketch.ViewObject.ShowLinks:
+#   tv.show([ref[0] for ref in ActiveSketch.ExternalGeometry])
+# tv.sketchClipPlane(ActiveSketch, ActiveSketch.ViewObject.SectionView)
+# tv.hide(ActiveSketch)
+# del(tv)
+# del(ActiveSketch)
+# 
+# ActiveSketch = App.getDocument('Unnamed').getObject('Sketch')
+# if ActiveSketch.ViewObject.RestoreCamera:
+#   ActiveSketch.ViewObject.TempoVis.saveCamera()
+#   if ActiveSketch.ViewObject.ForceOrtho:
+#     ActiveSketch.ViewObject.Document.ActiveView.setCameraType('Orthographic')
+# 
+# Gui.Selection.clearSelection()
 # Gui.runCommand('Sketcher_CompCreateRectangles',0)
 geoList = []
-geoList.append(Part.LineSegment(App.Vector(-1.002072,0.919122,0),App.Vector(1.089203,0.919122,0)))
-geoList.append(Part.LineSegment(App.Vector(1.089203,0.919122,0),App.Vector(1.089203,-0.525077,0)))
-geoList.append(Part.LineSegment(App.Vector(1.089203,-0.525077,0),App.Vector(-1.002072,-0.525077,0)))
-geoList.append(Part.LineSegment(App.Vector(-1.002072,-0.525077,0),App.Vector(-1.002072,0.919122,0)))
-App.getDocument('ParametricRectangle').getObject('RectangleSketch').addGeometry(geoList,False)
+geoList.append(Part.LineSegment(App.Vector(-10.862507,8.269021,0),App.Vector(14.877735,8.269021,0)))
+geoList.append(Part.LineSegment(App.Vector(14.877735,8.269021,0),App.Vector(14.877735,-11.268751,0)))
+geoList.append(Part.LineSegment(App.Vector(14.877735,-11.268751,0),App.Vector(-10.862507,-11.268751,0)))
+geoList.append(Part.LineSegment(App.Vector(-10.862507,-11.268751,0),App.Vector(-10.862507,8.269021,0)))
+App.getDocument('Unnamed').getObject('Sketch').addGeometry(geoList,False)
 conList = []
 conList.append(Sketcher.Constraint('Coincident',0,2,1,1))
 conList.append(Sketcher.Constraint('Coincident',1,2,2,1))
@@ -62,57 +88,81 @@ conList.append(Sketcher.Constraint('Horizontal',0))
 conList.append(Sketcher.Constraint('Horizontal',2))
 conList.append(Sketcher.Constraint('Vertical',1))
 conList.append(Sketcher.Constraint('Vertical',3))
-App.getDocument('ParametricRectangle').getObject('RectangleSketch').addConstraint(conList)
+App.getDocument('Unnamed').getObject('Sketch').addConstraint(conList)
 del geoList, conList
 
 # Gui.runCommand('Sketcher_ConstrainSymmetric',0)
-App.getDocument('ParametricRectangle').getObject('RectangleSketch').addConstraint(Sketcher.Constraint('Symmetric',0,2,2,2,-1,1))
-
+# Gui.Selection.addSelection('Unnamed','Body','Sketch.Vertex2',14.8777,8.26902,0)
+# Gui.Selection.addSelection('Unnamed','Body','Sketch.Vertex6',-10.8625,-11.2688,0)
+# Gui.Selection.addSelection('Unnamed','Body','Sketch.RootPoint')
+App.getDocument('Unnamed').getObject('Sketch').addConstraint(Sketcher.Constraint('Symmetric',0,2,2,2,-1,1))
+# Gui.Selection.clearSelection()
 # Gui.runCommand('Sketcher_ConstrainDistance',0)
-App.getDocument('ParametricRectangle').getObject('RectangleSketch').addConstraint(Sketcher.Constraint('Distance',0,2,0,1,2.039680))
-App.getDocument('ParametricRectangle').RectangleSketch.setExpression('Constraints[9]', u'var.wid')
-App.getDocument('ParametricRectangle').getObject('RectangleSketch').addConstraint(Sketcher.Constraint('Distance',0,1,2,2,1.146353))
-App.getDocument('ParametricRectangle').RectangleSketch.setExpression('Constraints[10]', u'var.thk')
-
-# Gui.getDocument('ParametricRectangle').resetEdit()
+# Gui.Selection.addSelection('Unnamed','Body','Sketch.Edge1',5.47066,9.26803,0)
+App.getDocument('Unnamed').getObject('Sketch').addConstraint(Sketcher.Constraint('Distance',0,24.617848))
+App.getDocument('Unnamed').Sketch.setExpression('Constraints[9]', u'<<var>>.x')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Body','Sketch.Edge4',-12.7,1.65306,0)
+App.getDocument('Unnamed').getObject('Sketch').addConstraint(Sketcher.Constraint('Distance',3,18.536058))
+App.getDocument('Unnamed').Sketch.setExpression('Constraints[10]', u'<<var>>.y')
+# Gui.Selection.clearSelection()
+# Gui.getDocument('Unnamed').resetEdit()
 App.ActiveDocument.recompute()
-
-# Gui.Selection.addSelection('ParametricRectangle','Body','RectangleSketch.')
-App.getDocument('ParametricRectangle').recompute()
-
+# ActiveSketch = App.getDocument('Unnamed').getObject('Sketch')
+# tv = ActiveSketch.ViewObject.TempoVis
+# if tv:
+#   tv.restore()
+# ActiveSketch.ViewObject.TempoVis = None
+# del(tv)
+# del(ActiveSketch)
+# 
+# Gui.Selection.addSelection('Unnamed','Body','Sketch.')
+App.getDocument('Unnamed').recompute()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Body')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Body','Sketch.')
 ### Begin command PartDesign_Pad
-# Gui.getDocument('ParametricRectangle').ActiveView.setActiveObject('pdbody',App.getDocument('ParametricRectangle').getObject('Body'),'')
-App.getDocument('ParametricRectangle').getObject('Body').newObject('PartDesign::Pad','Pad')
-App.getDocument('ParametricRectangle').getObject('Pad').Profile = App.getDocument('ParametricRectangle').getObject('RectangleSketch')
-App.getDocument('ParametricRectangle').getObject('Pad').Length = 10
+App.getDocument('Unnamed').getObject('Body').newObject('PartDesign::Pad','Pad')
+App.getDocument('Unnamed').getObject('Pad').Profile = App.getDocument('Unnamed').getObject('Sketch')
+App.getDocument('Unnamed').getObject('Pad').Length = 10
 App.ActiveDocument.recompute()
-App.getDocument('ParametricRectangle').getObject('Pad').ReferenceAxis = (App.getDocument('ParametricRectangle').getObject('RectangleSketch'),['N_Axis'])
-App.getDocument('ParametricRectangle').getObject('RectangleSketch').Visibility = False
+App.getDocument('Unnamed').getObject('Pad').ReferenceAxis = (App.getDocument('Unnamed').getObject('Sketch'),['N_Axis'])
+App.getDocument('Unnamed').getObject('Sketch').Visibility = False
 App.ActiveDocument.recompute()
+# App.getDocument('Unnamed').getObject('Pad').ViewObject.ShapeColor=getattr(App.getDocument('Unnamed').getObject('Body').getLinkedObject(True).ViewObject,'ShapeColor',App.getDocument('Unnamed').getObject('Pad').ViewObject.ShapeColor)
+# App.getDocument('Unnamed').getObject('Pad').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('Body').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Pad').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Pad').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('Body').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Pad').ViewObject.PointColor)
+# App.getDocument('Unnamed').getObject('Pad').ViewObject.Transparency=getattr(App.getDocument('Unnamed').getObject('Body').getLinkedObject(True).ViewObject,'Transparency',App.getDocument('Unnamed').getObject('Pad').ViewObject.Transparency)
+# App.getDocument('Unnamed').getObject('Pad').ViewObject.DisplayMode=getattr(App.getDocument('Unnamed').getObject('Body').getLinkedObject(True).ViewObject,'DisplayMode',App.getDocument('Unnamed').getObject('Pad').ViewObject.DisplayMode)
+# Gui.getDocument('Unnamed').setEdit(App.getDocument('Unnamed').getObject('Body'), 0, 'Pad.')
+# Gui.Selection.clearSelection()
 ### End command PartDesign_Pad
-
-App.getDocument('ParametricRectangle').Pad.setExpression('Length', u'var.len')
-App.getDocument('ParametricRectangle').getObject('Pad').TaperAngle = 0.000000
-App.getDocument('ParametricRectangle').getObject('Pad').UseCustomVector = 0
-App.getDocument('ParametricRectangle').getObject('Pad').Direction = (0, -1, 0)
-App.getDocument('ParametricRectangle').getObject('Pad').ReferenceAxis = (App.getDocument('ParametricRectangle').getObject('RectangleSketch'), ['N_Axis'])
-App.getDocument('ParametricRectangle').getObject('Pad').AlongSketchNormal = 1
-App.getDocument('ParametricRectangle').getObject('Pad').Type = 0
-App.getDocument('ParametricRectangle').getObject('Pad').UpToFace = None
-App.getDocument('ParametricRectangle').getObject('Pad').Reversed = 0
-App.getDocument('ParametricRectangle').getObject('Pad').Midplane = 0
-App.getDocument('ParametricRectangle').getObject('Pad').Offset = 0
-App.getDocument('ParametricRectangle').recompute()
-App.getDocument('ParametricRectangle').getObject('RectangleSketch').Visibility = False
-
-App.ActiveDocument.recompute()
-App.getDocument('ParametricRectangle').recompute()
-
-# Gui.SendMsgToActiveView("Save")
-App.getDocument("ParametricRectangle").save()
-### End command Std_Save
-
-Gui.activeDocument().activeView().viewIsometric()
-Gui.SendMsgToActiveView("ViewFit")
-doc.recompute()
-
+# Gui.Selection.clearSelection()
+App.getDocument('Unnamed').Pad.setExpression('Length', u'<<var>>.z')
+App.getDocument('Unnamed').getObject('Pad').TaperAngle = 0.000000
+App.getDocument('Unnamed').getObject('Pad').UseCustomVector = 0
+App.getDocument('Unnamed').getObject('Pad').Direction = (0, -1, 0)
+App.getDocument('Unnamed').getObject('Pad').ReferenceAxis = (App.getDocument('Unnamed').getObject('Sketch'), ['N_Axis'])
+App.getDocument('Unnamed').getObject('Pad').AlongSketchNormal = 1
+App.getDocument('Unnamed').getObject('Pad').Type = 0
+App.getDocument('Unnamed').getObject('Pad').UpToFace = None
+App.getDocument('Unnamed').getObject('Pad').Reversed = 0
+App.getDocument('Unnamed').getObject('Pad').Midplane = 0
+App.getDocument('Unnamed').getObject('Pad').Offset = 0
+App.getDocument('Unnamed').recompute()
+# Gui.getDocument('Unnamed').resetEdit()
+App.getDocument('Unnamed').getObject('Sketch').Visibility = False
+# Gui.Selection.addSelection('Unnamed','Body','Pad.')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Body')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','var')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Body')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Body','Pad.')
+# Gui.Selection.clearSelection()
+# Macro End: C:\Users\18055\AppData\Roaming\FreeCAD\Macro\temp.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
+App.Gui.activeDocument().activeView().viewIsometric()
+App.Gui.activeDocument().activeView().fitAll()
