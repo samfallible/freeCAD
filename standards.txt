@@ -11,7 +11,7 @@ NAMING STANDARD
 	ALL NAMES
 		firstSecondThird
 
-		AVOID USING ARTICLES WHEVER POSSIBLE
+		MINIMUM ARTICLE USE
 			exampleAcronymEPA
 
 			NOT thisIsAnExampleWithAnAcronymInItEPA
